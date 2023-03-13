@@ -1,0 +1,1 @@
+::: coppafish.pipeline.register

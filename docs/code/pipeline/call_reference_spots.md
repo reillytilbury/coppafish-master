@@ -1,0 +1,1 @@
+::: coppafish.pipeline.call_reference_spots
