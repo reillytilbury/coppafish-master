@@ -92,7 +92,7 @@ def find_spots(config: dict, nbp_file: NotebookPage, nbp_basic: NotebookPage, au
         for t in use_tiles:
             # columns of spot_details are: y, x, z
             # max value is y or x coordinate of around 2048 hence can use int16.
-            spot_details = np.empty((0, 3), dtype=np.int16)
+            spot_details = np.empty((0, 2 + nbp_basic.is_3d), dtype=np.int16)
             # spot_no will be an n_tiles by n_rounds by n_channels matrix, anchor_spots per round are approx 30,000 so
             # use int32.
             # The dimension for tiles needs to be total number of tiles, not just tiles used. If we tried to
