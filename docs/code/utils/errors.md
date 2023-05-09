@@ -1,0 +1,1 @@
+::: coppafish.utils.errors

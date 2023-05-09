@@ -1,0 +1,1 @@
+::: coppafish.find_spots.base
