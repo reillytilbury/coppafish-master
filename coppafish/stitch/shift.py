@@ -402,6 +402,11 @@ def compute_shift(yxz_base: np.ndarray, yxz_transform: np.ndarray, min_score_2d:
         z_scale = [z_scale, z_scale]
     if len(z_scale) > 2:
         raise ValueError(f'Only 2 z_scale values should be provided but z_scale given was {z_scale}.')
+    # Convert yxz_base and yxz_transform to 3D if not already
+    if yxz_base.shape[1] == 2:
+        yxz_base = np.hstack((yxz_base, np.zeros((yxz_base.shape[0], 1))))
+    if yxz_transform.shape[1] == 2:
+        yxz_transform = np.hstack((yxz_transform, np.zeros((yxz_transform.shape[0], 1))))
     yx_base_slices, yx_transform_trees, z_shift_guess = get_2d_slices(yxz_base, yxz_transform, nz_collapse)
     if nz_collapse is not None:
         # Only do z-scaling in 3D case
@@ -531,6 +536,7 @@ def compute_shift(yxz_base: np.ndarray, yxz_transform: np.ndarray, min_score_2d:
     y_shifts = refined_shifts(y_shifts, shift[0])
     x_shifts = refined_shifts(x_shifts, shift[1])
     z_shifts = refined_shifts(z_shifts, shift[2] / z_scale[0])
+    # Now find best shift with refined search, do this separately for 2d and 3d shifts.
     shift2, score2, all_shifts_new, all_scores_new = \
         get_best_shift_3d(yxz_base, yxz_transform_tree, neighb_dist_thresh, y_shifts, x_shifts,
                           z_shifts * z_scale[0], all_shifts_3d)
